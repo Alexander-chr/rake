@@ -211,11 +211,10 @@ module Rake
     # Find the location that called into the dsl layer.
     def find_location
       locations = caller
-      i = 0
-      while locations[i]
-        return locations[i+1] if locations[i] =~ /rake\/dsl_definition.rb/
-        i += 1
+      locations.each_with_index do |location, i|
+        return locations[i+1] if location =~ /rake\/dsl_definition.rb/
       end
+
       nil
     end
 
